@@ -3,9 +3,12 @@ package app.save.com.saveyourtime;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         if (phoneNum != null && !phoneNum.equals("")) {
             phoneEditText.setText(phoneNum);
         }
-
         imageView.setOnClickListener((l) -> {
             String phone = phoneEditText.getText().toString();
             if (phone == null || phone.equals("")) {
@@ -78,8 +80,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d("loudaer", STR);
 
         BarcodeFormat barcodeFormat = BarcodeFormat.QR_CODE;
-        Bitmap bitmap = encodeAsBitmap(STR, barcodeFormat, 500, 500);
+
+        int wh = dip2px(this, 200);
+        Bitmap bitmap = encodeAsBitmap(STR, barcodeFormat, wh, wh);
         imageView.setImageBitmap(bitmap);
+    }
+
+    private static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
     protected static Bitmap encodeAsBitmap(String contents,
