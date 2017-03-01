@@ -43,21 +43,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = (ImageView)findViewById(R.id.imageView);
-        phoneEditText = (EditText)findViewById(R.id.editText);
+        imageView.setOnClickListener((l) -> {
+            showQCCode();
+        });
 
+        phoneEditText = (EditText)findViewById(R.id.editText);
         String phoneNum = getPhone();
         if (phoneNum != null && !phoneNum.equals("")) {
             phoneEditText.setText(phoneNum);
         }
-        imageView.setOnClickListener((l) -> {
-            String phone = phoneEditText.getText().toString();
-            if (phone == null || phone.equals("")) {
-                Toast.makeText(this, "Plz input phone number", Toast.LENGTH_SHORT).show();
-            } else {
-                saveToSharePreference(phone);
-                setBarcode(phone);
-            }
-        });
+        showQCCode();
+
+    }
+
+    private void showQCCode() {
+        String phone = phoneEditText.getText().toString();
+        if (phone == null || phone.equals("")) {
+            Toast.makeText(this, "Plz input phone number", Toast.LENGTH_SHORT).show();
+        } else {
+            setBrightness(255);
+            saveToSharePreference(phone);
+            setBarcode(phone);
+        }
     }
 
     private void saveToSharePreference(String phone) {
@@ -176,5 +183,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return bitmap;
+    }
+
+    private void setBrightness(int brightValue) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        float f = brightValue / 255.0F;
+        lp.screenBrightness = f;
+        getWindow().setAttributes(lp);
     }
 }
