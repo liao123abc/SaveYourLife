@@ -15,6 +15,7 @@
         android:ems="10"
         android:hint="输入你的手机号码后点击红色方块"
         android:id="@+id/editText"
+        android:background="@null"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

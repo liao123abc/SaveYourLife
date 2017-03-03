@@ -53,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
             phoneEditText.setText(phoneNum);
         }
         showQCCode();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showQCCode();
     }
 
     private void showQCCode() {
